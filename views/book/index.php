@@ -13,6 +13,7 @@ use yii\grid\GridView;
 $this->title = 'Books';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+
 <div class="book-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
@@ -20,8 +21,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a('Create Book', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -32,18 +31,61 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'title',
             'year',
+
             [
-		    'attribute' => 'author_id',
-		    'value' => 'author.name',
-	    ], 
+                'attribute' => 'author_id',
+                'value' => 'author.name',
+            ],
+
+            // ⭐ Рейтинг (кнопки 1–5)
+            [
+                'label' => 'Rating',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    $html = '';
+                    for ($i = 1; $i <= 5; $i++) {
+                        $html .= Html::a(
+                            "⭐ $i ",
+                            Url::to(['book/rate', 'id' => $model->id, 'value' => $i])
+                        );
+                    }
+                    return $html;
+                }
+            ],
+
+            // ❤️ Избранное
+            [
+                'label' => 'Favorite',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return Html::a(
+                        '❤️ Add',
+                        Url::to(['book/favorite', 'id' => $model->id]),
+                        ['class' => 'btn btn-outline-danger btn-sm']
+                    );
+                }
+            ],
+
+            // 🛒 Корзина
+            [
+                'label' => 'Cart',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return Html::a(
+                        '🛒 Add',
+                        Url::to(['book/cart', 'id' => $model->id]),
+                        ['class' => 'btn btn-outline-primary btn-sm']
+                    );
+                }
+            ],
+
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Book $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
-                 }
+                }
             ],
         ],
     ]); ?>
-
 
 </div>

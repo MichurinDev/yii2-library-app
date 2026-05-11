@@ -16,3 +16,9 @@ php yii serve
 ### Лабораторная работа 2
 
 - Пользовательский каталог: <http://localhost:8080/index.php?r=catalog/index>
+
+### Лабораторная работа 3
+
+- Пользовательский каталог: <http://localhost:8080/index.php?r=catalog/index>
+- Избранное: <http://localhost:8080/index.php?r=favorites/index>
+- Корзина: <http://localhost:8080/index.php?r=cart/index>

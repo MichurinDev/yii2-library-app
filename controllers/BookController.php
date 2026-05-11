@@ -7,6 +7,10 @@ use app\models\BookSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\models\BookRating;
+use app\models\Favorites;
+use app\models\Cart;
+use Yii;
 
 /**
  * BookController implements the CRUD actions for Book model.
@@ -130,5 +134,33 @@ class BookController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+    
+    public function actionRate($id, $value)
+    {
+        $rating = new BookRating();
+        $rating->book_id = $id;
+        $rating->rating = $value;
+        $rating->save();
+
+        return $this->redirect(['index']);
+    }
+    
+    public function actionFavorite($id)
+    {
+        $fav = new Favorites();
+        $fav->book_id = $id;
+        $fav->save();
+
+        return $this->redirect(['index']);
+    }
+
+    public function actionCart($id)
+    {
+        $cart = new Cart();
+        $cart->book_id = $id;
+        $cart->save();
+
+        return $this->redirect(['index']);
     }
 }
