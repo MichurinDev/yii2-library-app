@@ -12,3 +12,7 @@ php yii serve
 
 - Авторы книг: <http://localhost:8080/index.php?r=author/index>
 - Книги: <http://localhost:8080/index.php?r=book/index>
+
+### Лабораторная работа 2
+
+- Пользовательский каталог: <http://localhost:8080/index.php?r=catalog/index>
