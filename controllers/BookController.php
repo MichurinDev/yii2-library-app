@@ -10,6 +10,7 @@ use yii\filters\VerbFilter;
 use app\models\BookRating;
 use app\models\Favorites;
 use app\models\Cart;
+use yii\filters\AccessControl;
 use Yii;
 
 /**
@@ -22,17 +23,36 @@ class BookController extends Controller
      */
     public function behaviors()
     {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::className(),
-                    'actions' => [
-                        'delete' => ['POST'],
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => [
+                            'create',
+                            'update',
+                            'delete'
+                        ],
+                        'matchCallback' => function () {
+                            return !Yii::$app->user->isGuest
+                                && Yii::$app->user->identity->role === 'admin';
+                        }
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => [
+                            'index',
+                            'view',
+                            'rate',
+                            'favorite',
+                            'cart'
+                        ],
+                        'roles' => ['@']
                     ],
                 ],
-            ]
-        );
+            ],
+        ];
     }
 
     /**

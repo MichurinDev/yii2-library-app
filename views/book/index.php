@@ -19,7 +19,15 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Book', ['create'], ['class' => 'btn btn-success']) ?>
+        <?php if (!Yii::$app->user->isGuest && Yii::$app->user->identity->role === 'admin'): ?>
+
+            <?= Html::a(
+                'Create Book',
+                ['create'],
+                ['class' => 'btn btn-success']
+            ) ?>
+
+        <?php endif; ?>
     </p>
 
     <?= GridView::widget([
@@ -37,43 +45,59 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => 'author.name',
             ],
 
-            // ⭐ Рейтинг (кнопки 1–5)
+            // Рейтинг (кнопки 1–5)
             [
                 'label' => 'Rating',
                 'format' => 'raw',
                 'value' => function ($model) {
+
                     $html = '';
+
                     for ($i = 1; $i <= 5; $i++) {
+
                         $html .= Html::a(
                             "⭐ $i ",
-                            Url::to(['book/rate', 'id' => $model->id, 'value' => $i])
+                            Url::to([
+                                'book/rate',
+                                'id' => $model->id,
+                                'value' => $i
+                            ])
                         );
                     }
+
                     return $html;
                 }
             ],
 
-            // ❤️ Избранное
+            // Избранное
             [
                 'label' => 'Favorite',
                 'format' => 'raw',
                 'value' => function ($model) {
+
                     return Html::a(
                         '❤️ Add',
-                        Url::to(['book/favorite', 'id' => $model->id]),
+                        Url::to([
+                            'book/favorite',
+                            'id' => $model->id
+                        ]),
                         ['class' => 'btn btn-outline-danger btn-sm']
                     );
                 }
             ],
 
-            // 🛒 Корзина
+            // Корзина
             [
                 'label' => 'Cart',
                 'format' => 'raw',
                 'value' => function ($model) {
+
                     return Html::a(
                         '🛒 Add',
-                        Url::to(['book/cart', 'id' => $model->id]),
+                        Url::to([
+                            'book/cart',
+                            'id' => $model->id
+                        ]),
                         ['class' => 'btn btn-outline-primary btn-sm']
                     );
                 }
@@ -81,6 +105,20 @@ $this->params['breadcrumbs'][] = $this->title;
 
             [
                 'class' => ActionColumn::className(),
+
+                'visibleButtons' => [
+
+                    'update' => function () {
+                        return !Yii::$app->user->isGuest
+                            && Yii::$app->user->identity->role === 'admin';
+                    },
+
+                    'delete' => function () {
+                        return !Yii::$app->user->isGuest
+                            && Yii::$app->user->identity->role === 'admin';
+                    },
+                ],
+
                 'urlCreator' => function ($action, Book $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                 }
