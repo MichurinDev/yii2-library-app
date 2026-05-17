@@ -125,4 +125,14 @@ class SiteController extends Controller
     {
         return $this->render('about');
     }
+
+    public function actionAjaxSearch()
+    {
+        return $this->render('ajax-search');
+    }
+
+    public function actionAjaxForm()
+    {
+        return $this->render('ajax-form');
+    }
 }

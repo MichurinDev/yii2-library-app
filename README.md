@@ -46,3 +46,9 @@ php yii serve
 | Редактирование книг | ✅    | ❌   |
 | Удаление книг       | ✅    | ❌   |
 | CRUD авторов        | ✅    | ❌   |
+
+### Лабораторная работа 5
+
+- AJAX поиск книг: <http://localhost:8080/index.php?r=site/ajax-search>
+
+- AJAX форма: <http://localhost:8080/index.php?r=site/ajax-form>
