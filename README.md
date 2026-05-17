@@ -25,6 +25,8 @@ php yii serve
 
 ### Лабораторная работа 4
 
+Страница авторизации: <http://localhost:8080/index.php?r=site/login>
+
 Доступ:
 - Администратор
     - Логин: admin

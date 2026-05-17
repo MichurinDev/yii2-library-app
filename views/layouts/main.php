@@ -38,7 +38,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     ]);
 
     echo Nav::widget([
-        'options' => ['class' => 'navbar-nav'],
+        'options' => ['class' => 'navbar-nav me-auto'],
         'items' => [
             ['label' => 'Home', 'url' => ['/site/index']],
             ['label' => 'Books', 'url' => ['/book/index']],
@@ -60,6 +60,38 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             //         . '</li>'
         ]
     ]);
+
+    if (Yii::$app->user->isGuest) {
+        echo Html::a(
+            'Login',
+            ['/site/login'],
+            ['class' => 'btn btn-outline-light']
+        );
+
+    } else {
+
+        echo '<div class="d-flex align-items-center text-white">';
+
+        echo '<span class="me-3">';
+
+        echo '👤 ' . Html::encode(Yii::$app->user->identity->username);
+
+        echo '</span>';
+
+        echo Html::beginForm(
+            ['/site/logout'],
+            'post'
+        );
+
+        echo Html::submitButton(
+            'Logout',
+            ['class' => 'btn btn-outline-light btn-sm']
+        );
+
+        echo Html::endForm();
+
+        echo '</div>';
+    }
 
     NavBar::end();
     ?>
