@@ -17,9 +17,21 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a('Create Author', ['create'], ['class' => 'btn btn-success']) ?>
+        <p>
+        <?php if (!Yii::$app->user->isGuest && Yii::$app->user->identity->role === 'admin'): ?>
+
+            <?= Html::a(
+                'Create Author',
+                ['create'],
+                ['class' => 'btn btn-success']
+            ) ?>
+
+        <?php endif; ?>
     </p>
+
+    <!-- <p>
+        <?= Html::a('Create Author', ['create'], ['class' => 'btn btn-success']) ?>
+    </p> -->
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 

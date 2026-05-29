@@ -42,6 +42,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         'items' => [
             ['label' => 'Home', 'url' => ['/site/index']],
             ['label' => 'Books', 'url' => ['/book/index']],
+            ['label' => 'Authors', 'url' => ['/author/index']],
             ['label' => 'Favorites', 'url' => ['/favorites/index']],
             ['label' => 'Cart', 'url' => ['/cart/index']],
 
